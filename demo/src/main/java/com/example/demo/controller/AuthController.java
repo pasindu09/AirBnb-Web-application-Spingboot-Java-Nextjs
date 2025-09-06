@@ -19,6 +19,7 @@ public class AuthController {
 
     @GetMapping("/login")
     public String loginForm() {
+        System.out.println("hello");
         return "login"; // Returns login.html template
     }
 
