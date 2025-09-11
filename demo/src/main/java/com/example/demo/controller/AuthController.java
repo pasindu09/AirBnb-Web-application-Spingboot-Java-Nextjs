@@ -1,5 +1,7 @@
 package com.example.demo.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,7 +14,7 @@ import com.example.demo.service.AuthService;
 
 @Controller
 public class AuthController {
-
+    private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
     private final AuthService authService;
     public AuthController(AuthService authService) {
         this.authService = authService;
@@ -20,7 +22,7 @@ public class AuthController {
 
     @GetMapping("/login")
     public String loginForm() {
-        System.out.println("hello");
+        logger.info("Accessing login page");
         return "login"; // Returns login.html template
     }
 
@@ -36,7 +38,7 @@ public class AuthController {
     }
 
 
-     @GetMapping("/register")
+    @GetMapping("/register")
     public String registerForm() {
         return "register"; // Returns register.html template
     }
