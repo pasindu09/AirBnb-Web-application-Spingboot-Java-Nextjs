@@ -45,6 +45,9 @@ dependencies {
     // Testing
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
+    // testing , hot reload ig
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+  
 }
 
 tasks.named('test') {
