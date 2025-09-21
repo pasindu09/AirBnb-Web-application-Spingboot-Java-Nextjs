@@ -13,7 +13,7 @@ public class Pricing {
     private BigDecimal monthlyDiscount; // e.g., 20% discount
 
     // Method to calculate total for a stay
-    // public BigDecimal calculateTotal(LocalDate checkIn, LocalDate checkOut) { ... }
+    public BigDecimal calculateTotal(LocalDate checkIn, LocalDate checkOut) { ... }
 
     // Getters and Setters
 }

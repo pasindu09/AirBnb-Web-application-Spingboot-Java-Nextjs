@@ -31,36 +31,36 @@ public class Booking {
 }
 
 
-// @Entity
-// @Table(name = "bookings")
-// public class Booking {
-//     @Id
-//     @GeneratedValue(strategy = GenerationType.IDENTITY)
-//     private Long id;
+@Entity
+@Table(name = "bookings")
+public class Booking {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-//     @ManyToOne(fetch = FetchType.LAZY)
-//     @JoinColumn(name = "guest_id", nullable = false)
-//     private User guest;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "guest_id", nullable = false)
+    private User guest;
 
-//     @ManyToOne(fetch = FetchType.LAZY)
-//     @JoinColumn(name = "rental_id", nullable = false)
-//     private Rental rental;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "rental_id", nullable = false)
+    private Rental rental;
 
-//     @Column(nullable = false)
-//     private LocalDate checkInDate;
+    @Column(nullable = false)
+    private LocalDate checkInDate;
 
-//     @Column(nullable = false)
-//     private LocalDate checkOutDate;
+    @Column(nullable = false)
+    private LocalDate checkOutDate;
 
-//     private Integer numberOfGuests;
+    private Integer numberOfGuests;
 
-//     @Enumerated(EnumType.STRING)
-//     private BookingStatus status; // e.g., PENDING, CONFIRMED, CANCELLED, COMPLETED
+    @Enumerated(EnumType.STRING)
+    private BookingStatus status; // e.g., PENDING, CONFIRMED, CANCELLED, COMPLETED
 
-//     @Embedded
-//     private PaymentDetail paymentDetail; // Total price, currency, transaction ID, status
+    @Embedded
+    private PaymentDetail paymentDetail; // Total price, currency, transaction ID, status
 
-//     private LocalDateTime bookedAt;
+    private LocalDateTime bookedAt;
 
-//     // Constructors, Getters, Setters, etc.
-// }
+    // Constructors, Getters, Setters, etc.
+}

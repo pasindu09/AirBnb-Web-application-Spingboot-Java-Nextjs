@@ -18,9 +18,9 @@ public class RentalImage {
 
     private String caption;
 
-    // @ManyToOne(fetch = FetchType.LAZY)
-    // @JoinColumn(name = "rental_id", nullable = false)
-    // private Rental rental;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "rental_id", nullable = false)
+    private Rental rental;
 
     // Constructors, Getters, Setters, etc.
 }
