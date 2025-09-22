@@ -6,13 +6,21 @@ export default function CreateRentalForm() {
     const [country, setCountry] = useState("");
     const [region, setRegion] = useState("");
     const [description, setDescription] = useState("");
+    const [propertyType, setPropertyType] = useState(""); // NEW
+    const [title, setTitle] = useState("");
+    const [price, setPrice] = useState<number | "">("");
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        console.log("Image File:", image?.name);
-        console.log("Country:", country);
-        console.log("Region:", region);
-        console.log("Description:", description);
+        console.log({
+            title,
+            country,
+            region,
+            propertyType,
+            price,
+            description,
+            image: image?.name,
+        });
     };
 
     return (
@@ -28,9 +36,27 @@ export default function CreateRentalForm() {
                         <label className="block text-sm font-medium mb-1">Title</label>
                         <input
                             type="text"
+                            value={title}
+                            onChange={(e) => setTitle(e.target.value)}
                             className="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-rose-500 focus:outline-none"
                             placeholder="Beautiful villa with sea view"
                         />
+                    </div>
+
+                    {/* Rental Type */}
+                    <div>
+                        <label className="block text-sm font-medium mb-1">Rental Type</label>
+                        <select
+                            value={propertyType}
+                            onChange={(e) => setPropertyType(e.target.value)}
+                            className="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-rose-500 focus:outline-none"
+                        >
+                            <option value="">Select type</option>
+                            <option value="APARTMENT">Apartment</option>
+                            <option value="HOUSE">House</option>
+                            <option value="CONDO">Condo</option>
+                            <option value="VILLA">Villa</option>
+                        </select>
                     </div>
 
                     {/* Country */}
@@ -43,7 +69,7 @@ export default function CreateRentalForm() {
                         />
                     </div>
 
-                    {/* Region/State */}
+                    {/* Region */}
                     <div>
                         <label className="block text-sm font-medium mb-1">Region</label>
                         <RegionDropdown
@@ -56,17 +82,17 @@ export default function CreateRentalForm() {
 
                     {/* Price */}
                     <div>
-                        <label className="block text-sm font-medium mb-1">
-                            Price per night
-                        </label>
+                        <label className="block text-sm font-medium mb-1">Price per night</label>
                         <input
                             type="number"
+                            value={price}
+                            onChange={(e) => setPrice(Number(e.target.value))}
                             className="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-rose-500 focus:outline-none"
                             placeholder="100"
                         />
                     </div>
 
-                    {/* Image Upload */}
+                    {/* Image */}
                     <div>
                         <label className="block text-sm font-medium mb-1">Upload Image</label>
                         <input
