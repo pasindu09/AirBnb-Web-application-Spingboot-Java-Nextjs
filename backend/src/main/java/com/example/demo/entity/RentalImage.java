@@ -13,21 +13,21 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-// @Entity
-// @Table(name = "rental_images")
-// @Getter @Setter @NoArgsConstructor
-// public class RentalImage {
+@Entity
+@Table(name = "rental_images")
+@Getter @Setter @NoArgsConstructor
+public class RentalImage {
 
-//     @Id
-//     @GeneratedValue(strategy = GenerationType.IDENTITY)
-//     private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-//     @Column(nullable = false)
-//     private String imageUrl;
+    @Column(nullable = false)
+    private String imageUrl;
 
-//     // private String caption;
+    // private String caption;
 
-//     @ManyToOne(fetch = FetchType.LAZY)
-//     @JoinColumn(name = "rental_id", nullable = false)
-//     private Rental rental;
-// }
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "rental_id", nullable = false)
+    private Rental rental;
+}
