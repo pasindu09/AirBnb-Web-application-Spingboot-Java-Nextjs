@@ -17,7 +17,6 @@ public class RentalRequest {
     private Integer numberOfGuests;
     private Integer numberOfBedrooms;
     private Integer numberOfBeds;
-    private Integer numberOfBathrooms;
 
     private String country;
     private String region;
