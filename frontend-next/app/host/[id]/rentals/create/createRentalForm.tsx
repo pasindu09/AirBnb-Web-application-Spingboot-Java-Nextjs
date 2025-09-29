@@ -10,18 +10,36 @@ export default function CreateRentalForm() {
     const [title, setTitle] = useState("");
     const [price, setPrice] = useState<number | "">("");
 
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        console.log({
-            title,
-            country,
-            region,
-            propertyType,
-            price,
-            description,
-            image: image?.name,
-        });
-    };
+    const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+
+  const payload = {
+    title,
+    country,
+    region,
+    propertyType,
+    price,
+    description,
+  };
+
+  try {
+    const response = await fetch("http://localhost:8080/rentals", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+
+    if (!response.ok) throw new Error(`Error: ${response.status}`);
+
+    const data = await response.json();
+    console.log("Rental created:", data);
+    alert("Rental created successfully!");
+  } catch (err) {
+    console.error(err);
+    alert("Failed to create rental");
+  }
+};
+
 
     return (
         <div className="p-8 max-w-2xl mx-auto">
