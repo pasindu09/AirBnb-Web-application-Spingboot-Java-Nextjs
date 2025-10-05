@@ -41,4 +41,20 @@ public class AuthService {
         return true;
     }
 
+     public boolean Auth(RegistrationRequest registrationRequest) {
+        // Check if the username already exists
+        if (userRepository.findByUsername(registrationRequest.getUsername()).isPresent()) {
+            return false; // Username already taken
+        }
+
+        // Create a new User entity
+        User newUser = new User();
+        newUser.setUsername(registrationRequest.getUsername());
+        newUser.setPassword(passwordEncoder.encode(registrationRequest.getPassword())); // Hash the password
+
+        // Save the new user to the database
+        userRepository.save(newUser);
+        return true;
+    }
+
 }
