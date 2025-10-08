@@ -37,8 +37,8 @@ public class AuthService {
         newUser.setPassword(passwordEncoder.encode(registrationRequest.getPassword())); // Hash the password
 
         // Save the new user to the database
-        userRepository.save(newUser);
-        return true;
+        // userRepository.save(newUser);
+        // return true;
     }
 
      public boolean Auth(RegistrationRequest registrationRequest) {
