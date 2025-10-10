@@ -7,36 +7,40 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-
+import org.springframework.beans.factory.annotation.Value;
 import com.example.demo.dto.LoginRequest;
 import com.example.demo.dto.RegistrationRequest;
 import com.example.demo.service.AuthService;
 
 @Controller
 public class AuthController {
+    @Value("${frontend.url}")
+    private String frontendUrl;
     private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
     private final AuthService authService;
+
     public AuthController(AuthService authService) {
         this.authService = authService;
     }
 
     @GetMapping("/login")
-    public String loginForm() {
+    public String loginForm(Model model) {
         logger.info("Accessing login page");
-        return "login"; // Returns login.html template
+        model.addAttribute("loginRequest", new LoginRequest());
+        return "login"; // Returns login.html
     }
 
     @PostMapping("/login")
     public String loginSubmit(@ModelAttribute LoginRequest loginRequest, Model model) {
         if (authService.authenticate(loginRequest)) {
+            logger.info("Accessing login page 2");
             model.addAttribute("message", "Login successful!");
-            return "home"; // Redirect to home.html
+            return "redirect:" + frontendUrl + "/";
         } else {
             model.addAttribute("error", "Invalid credentials");
             return "login";
         }
     }
-
 
     @GetMapping("/register")
     public String registerForm() {
@@ -53,5 +57,5 @@ public class AuthController {
             return "register"; // Stay on the registration page with an error
         }
     }
-    
+
 }

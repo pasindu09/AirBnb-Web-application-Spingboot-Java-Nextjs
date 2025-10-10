@@ -1,5 +1,7 @@
 package com.example.demo.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +13,8 @@ import com.example.demo.repository.UserRepository;
 @Service
 public class AuthService {
 
+    private static final Logger logger = LoggerFactory.getLogger(AuthService.class);
+
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
@@ -19,42 +23,57 @@ public class AuthService {
         this.passwordEncoder = passwordEncoder;
     }
 
+    /**
+     * Authenticate user based on username and password.
+     * Logs all outcomes and handles exceptions gracefully.
+     */
     public boolean authenticate(LoginRequest loginRequest) {
-        return userRepository.findByUsername(loginRequest.getUsername())
-                .map(user -> passwordEncoder.matches(loginRequest.getPassword(), user.getPassword()))
-                .orElse(false);
+        String username = loginRequest.getUsername();
+
+        try {
+            return userRepository.findByUsername(username)
+                    .map(user -> {
+                        boolean matches = passwordEncoder.matches(loginRequest.getPassword(), user.getPassword());
+                        if (matches) {
+                            logger.info("Login successful for user: {}", username);
+                        } else {
+                            logger.warn("Login failed for user: {} (invalid password)", username);
+                        }
+                        return matches;
+                    })
+                    .orElseGet(() -> {
+                        logger.warn("Login failed: username '{}' not found", username);
+                        return false;
+                    });
+        } catch (Exception e) {
+            logger.error("Error during authentication for user '{}': {}", username, e.getMessage());
+            throw e; // Let GlobalExceptionHandler handle it
+        }
     }
 
+    /**
+     * Register a new user if the username does not already exist.
+     * Logs results and propagates exceptions.
+     */
     public boolean register(RegistrationRequest registrationRequest) {
-        // Check if the username already exists
-        if (userRepository.findByUsername(registrationRequest.getUsername()).isPresent()) {
-            return false; // Username already taken
+        String username = registrationRequest.getUsername();
+
+        if (userRepository.findByUsername(username).isPresent()) {
+            logger.warn("⚠️ Registration failed: username '{}' already exists", username);
+            return false;
         }
 
-        // Create a new User entity
-        User newUser = new User();
-        newUser.setUsername(registrationRequest.getUsername());
-        newUser.setPassword(passwordEncoder.encode(registrationRequest.getPassword())); // Hash the password
+        try {
+            User newUser = new User();
+            newUser.setUsername(username);
+            newUser.setPassword(passwordEncoder.encode(registrationRequest.getPassword()));
+            userRepository.save(newUser);
 
-        // Save the new user to the database
-        // userRepository.save(newUser);
-        // return true;
-    }
-
-     public boolean Auth(RegistrationRequest registrationRequest) {
-        // Check if the username already exists
-        if (userRepository.findByUsername(registrationRequest.getUsername()).isPresent()) {
-            return false; // Username already taken
+            logger.info("Registration successful for user: {}", username);
+            return true;
+        } catch (Exception e) {
+            logger.error("Error during registration for user '{}': {}", username, e.getMessage());
+            throw e; // Let GlobalExceptionHandler handle it
         }
-
-        // Create a new User entity
-        User newUser = new User();
-        newUser.setUsername(registrationRequest.getUsername());
-        newUser.setPassword(passwordEncoder.encode(registrationRequest.getPassword())); // Hash the password
-
-        // Save the new user to the database
-        userRepository.save(newUser);
-        return true;
     }
-
 }
