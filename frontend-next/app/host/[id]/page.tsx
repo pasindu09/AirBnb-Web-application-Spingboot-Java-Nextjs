@@ -7,7 +7,7 @@ export default function HostDashboard() {
           <h2 className="text-xl font-semibold">Manage Rentals</h2>
           <p className="text-gray-600">View, edit, and delete your properties.</p>
         </a>
-        <a href="/host/rentals/create" className="p-6 bg-white rounded-xl shadow hover:shadow-lg transition">
+        <a href="/host/1/rentals/create" className="p-6 bg-white rounded-xl shadow hover:shadow-lg transition">
           <h2 className="text-xl font-semibold">Add New Rental</h2>
           <p className="text-gray-600">List a new property for guests to book.</p>
         </a>
