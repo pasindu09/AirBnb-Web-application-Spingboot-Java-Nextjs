@@ -1,24 +1,17 @@
 package com.example.demo.entity;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import jakarta.persistence.CascadeType;
-import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
-import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -46,31 +39,18 @@ public class Rental {
     @Column(nullable = false)
     private PropertyType propertyType; // APARTMENT, HOUSE, CONDO, VILLA
 
+    // Fields related to guests/rooms are kept, assuming they might be used later.
     private Integer numberOfGuests;
     private Integer numberOfBedrooms;
     private Integer numberOfBeds;
     private Integer numberOfBathrooms;
 
     @Embedded
-    private Address address; // Embedded value object (street, city, state, zip, country)
-
-    @ElementCollection
-    @CollectionTable(name = "rental_amenities", joinColumns = @JoinColumn(name = "rental_id"))
-    private Set<String> amenities = new HashSet<>();
+    private Address address;
 
     @OneToMany(mappedBy = "rental", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<RentalImage> images = new ArrayList<>();
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "host_id", nullable = false)
-    private User host;
-
-    // @OneToMany(mappedBy = "rental", cascade = CascadeType.ALL, orphanRemoval = true)
-    // private List<Booking> bookings = new ArrayList<>();
-
-    // @OneToMany(mappedBy = "rental", cascade = CascadeType.ALL, orphanRemoval = true)
-    // private List<Review> reviews = new ArrayList<>();
-
     @Embedded
-    private Pricing pricing; // Pricing embedded into the rentals table
+    private Pricing pricing;
 }

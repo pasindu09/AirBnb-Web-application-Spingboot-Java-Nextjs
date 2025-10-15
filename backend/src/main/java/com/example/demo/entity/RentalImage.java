@@ -1,5 +1,7 @@
 package com.example.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -29,5 +31,7 @@ public class RentalImage {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "rental_id", nullable = false)
+    //json ignore temporarily --- to avoid circular reference issue
+    @JsonIgnore 
     private Rental rental;
 }

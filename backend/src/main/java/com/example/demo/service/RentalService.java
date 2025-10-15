@@ -1,10 +1,20 @@
 package com.example.demo.service;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.UUID;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.dto.RentalRequest;
 import com.example.demo.entity.Address;
 import com.example.demo.entity.Pricing;
+import com.example.demo.entity.PropertyType;
 import com.example.demo.entity.Rental;
 import com.example.demo.entity.RentalImage;
 import com.example.demo.repository.RentalRepository;
@@ -17,43 +27,54 @@ public class RentalService {
 
     private final RentalRepository rentalRepository;
 
-    @Transactional
-    public Rental createRental(RentalRequest request) {
-        Rental rental = new Rental();
-        rental.setTitle(request.getTitle());
-        rental.setDescription(request.getDescription());
-        rental.setPropertyType(request.getPropertyType());
-        rental.setNumberOfGuests(request.getNumberOfGuests());
-        rental.setNumberOfBedrooms(request.getNumberOfBedrooms());
-        rental.setNumberOfBeds(request.getNumberOfBeds());
-        rental.setNumberOfBathrooms(request.getNumberOfBathrooms());
+    @Value("${upload.dir:uploads/rentals}")
+    private String uploadDir;
 
-        // Address
+    @Transactional
+    public Rental createRental(RentalRequest rentalRequest, MultipartFile image) {
+
+       
+        Rental rental = new Rental();
+        rental.setTitle(rentalRequest.getTitle());
+        rental.setDescription(rentalRequest.getDescription());
+        rental.setPropertyType(PropertyType.valueOf(rentalRequest.getPropertyType().toUpperCase()));
+
+        
         Address address = new Address();
-        address.setCountry(request.getCountry());
-        address.setState(request.getRegion()); // storing region as state for now
+        address.setCountry(rentalRequest.getCountry());
+        address.setState(rentalRequest.getRegion()); 
         rental.setAddress(address);
 
-        // Pricing
+       
         Pricing pricing = new Pricing();
-        pricing.setBasePricePerNight(request.getBasePricePerNight());
+        pricing.setBasePricePerNight(rentalRequest.getPrice());
         rental.setPricing(pricing);
 
-        // Amenities
-        if (request.getAmenities() != null) {
-            rental.getAmenities().addAll(request.getAmenities());
-        }
+     
+        if (image != null && !image.isEmpty()) {
+            try {
+                Path uploadPath = Paths.get(uploadDir);
+                if (!Files.exists(uploadPath)) {
+                    Files.createDirectories(uploadPath);
+                }
 
-        // Images
-        if (request.getImageUrls() != null) {
-            for (String url : request.getImageUrls()) {
-                RentalImage img = new RentalImage();
-                img.setImageUrl(url);
-                img.setRental(rental);
-                rental.getImages().add(img);
+                String uniqueFileName = UUID.randomUUID() + "_" + image.getOriginalFilename();
+                Path filePath = uploadPath.resolve(uniqueFileName);
+                Files.copy(image.getInputStream(), filePath);
+
+                // Create and link RentalImage entity
+                RentalImage rentalImage = new RentalImage();
+                rentalImage.setImageUrl("/uploads/rentals/" + uniqueFileName);
+                rentalImage.setRental(rental);
+                rental.getImages().add(rentalImage);
+
+            } catch (IOException e) {
+                // Better to use a specific custom exception
+                throw new RuntimeException("Failed to save image file", e);
             }
         }
 
+        
         return rentalRepository.save(rental);
     }
 }

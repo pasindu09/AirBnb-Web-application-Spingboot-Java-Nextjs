@@ -1,9 +1,6 @@
 package com.example.demo.dto;
 
 import java.math.BigDecimal;
-import java.util.List;
-
-import com.example.demo.entity.PropertyType;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -12,18 +9,10 @@ import lombok.Setter;
 public class RentalRequest {
     private String title;
     private String description;
-    private PropertyType propertyType;
-
-    private Integer numberOfGuests;
-    private Integer numberOfBedrooms;
-    private Integer numberOfBeds;
-    private Integer numberOfBathrooms;
+    private String propertyType; // Keeping it as String for simple form data binding
 
     private String country;
     private String region;
 
-    private BigDecimal basePricePerNight;
-
-    private List<String> amenities;
-    private List<String> imageUrls; // paths/URLs of uploaded images
+    private BigDecimal price; // The frontend sends a string, which Spring will convert to BigDecimal
 }
