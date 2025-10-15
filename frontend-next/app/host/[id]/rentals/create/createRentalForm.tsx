@@ -10,35 +10,64 @@ export default function CreateRentalForm() {
     const [title, setTitle] = useState("");
     const [price, setPrice] = useState<number | "">("");
 
+    // const handleSubmit = async (e: React.FormEvent) => {
+    //     e.preventDefault();
+
+    //     const payload = {
+    //         title,
+    //         country,
+    //         region,
+    //         propertyType,
+    //         price,
+    //         description,
+    //     };
+
+    //     try {
+    //         const response = await fetch("http://localhost:8080/rentals", {
+    //             method: "POST",
+    //             headers: { "Content-Type": "application/json" },
+    //             body: JSON.stringify(payload),
+    //         });
+
+    //         if (!response.ok) throw new Error(`Error: ${response.status}`);
+
+    //         const data = await response.json();
+    //         console.log("Rental created:", data);
+    //         alert("Rental created successfully!");
+    //     } catch (err) {
+    //         console.error(err);
+    //         alert("Failed to create rental");
+    //     }
+    // };
     const handleSubmit = async (e: React.FormEvent) => {
-  e.preventDefault();
+        e.preventDefault();
 
-  const payload = {
-    title,
-    country,
-    region,
-    propertyType,
-    price,
-    description,
-  };
+        const formData = new FormData();
+        formData.append("title", title);
+        formData.append("country", country);
+        formData.append("region", region);
+        formData.append("propertyType", propertyType);
+        formData.append("price", price.toString());
+        formData.append("description", description);
+        if (image) formData.append("image", image); // Attach file if available
 
-  try {
-    const response = await fetch("http://localhost:8080/rentals", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    });
+        try {
+            const response = await fetch("http://localhost:8080/rentals", {
+                method: "POST",
+                body: formData, // no need for headers here
+            });
 
-    if (!response.ok) throw new Error(`Error: ${response.status}`);
+            if (!response.ok) throw new Error(`Error: ${response.status}`);
 
-    const data = await response.json();
-    console.log("Rental created:", data);
-    alert("Rental created successfully!");
-  } catch (err) {
-    console.error(err);
-    alert("Failed to create rental");
-  }
-};
+            const data = await response.json();
+            console.log("Rental created:", data);
+            alert("Rental created successfully!");
+        } catch (err) {
+            console.error(err);
+            alert("Failed to create rental");
+        }
+    };
+
 
 
     return (
