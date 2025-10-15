@@ -23,10 +23,7 @@ public class AuthService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    /**
-     * Authenticate user based on username and password.
-     * Logs all outcomes and handles exceptions gracefully.
-     */
+   
     public boolean authenticate(LoginRequest loginRequest) {
         String username = loginRequest.getUsername();
 
@@ -47,14 +44,11 @@ public class AuthService {
                     });
         } catch (Exception e) {
             logger.error("Error during authentication for user '{}': {}", username, e.getMessage());
-            throw e; // Let GlobalExceptionHandler handle it
+            throw e; 
         }
     }
 
-    /**
-     * Register a new user if the username does not already exist.
-     * Logs results and propagates exceptions.
-     */
+
     public boolean register(RegistrationRequest registrationRequest) {
         String username = registrationRequest.getUsername();
 
@@ -73,7 +67,7 @@ public class AuthService {
             return true;
         } catch (Exception e) {
             logger.error("Error during registration for user '{}': {}", username, e.getMessage());
-            throw e; // Let GlobalExceptionHandler handle it
+            throw e; 
         }
     }
 }
