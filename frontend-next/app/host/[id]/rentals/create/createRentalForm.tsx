@@ -49,12 +49,12 @@ export default function CreateRentalForm() {
         formData.append("propertyType", propertyType);
         formData.append("price", price.toString());
         formData.append("description", description);
-        if (image) formData.append("image", image); // Attach file if available
+        if (image) formData.append("image", image); 
 
         try {
             const response = await fetch("http://localhost:8080/rentals", {
                 method: "POST",
-                body: formData, // no need for headers here
+                body: formData,
             });
 
             if (!response.ok) throw new Error(`Error: ${response.status}`);
@@ -78,7 +78,7 @@ export default function CreateRentalForm() {
                 </h1>
 
                 <form onSubmit={handleSubmit} className="space-y-6">
-                    {/* Title */}
+                    
                     <div>
                         <label className="block text-sm font-medium mb-1">Title</label>
                         <input
@@ -90,7 +90,7 @@ export default function CreateRentalForm() {
                         />
                     </div>
 
-                    {/* Rental Type */}
+                   
                     <div>
                         <label className="block text-sm font-medium mb-1">Rental Type</label>
                         <select
@@ -106,7 +106,7 @@ export default function CreateRentalForm() {
                         </select>
                     </div>
 
-                    {/* Country */}
+                    
                     <div>
                         <label className="block text-sm font-medium mb-1">Country</label>
                         <CountryDropdown
@@ -116,7 +116,7 @@ export default function CreateRentalForm() {
                         />
                     </div>
 
-                    {/* Region */}
+                    
                     <div>
                         <label className="block text-sm font-medium mb-1">Region</label>
                         <RegionDropdown
@@ -127,7 +127,7 @@ export default function CreateRentalForm() {
                         />
                     </div>
 
-                    {/* Price */}
+                   
                     <div>
                         <label className="block text-sm font-medium mb-1">Price per night</label>
                         <input
@@ -139,7 +139,6 @@ export default function CreateRentalForm() {
                         />
                     </div>
 
-                    {/* Image */}
                     <div>
                         <label className="block text-sm font-medium mb-1">Upload Image</label>
                         <input
@@ -150,7 +149,7 @@ export default function CreateRentalForm() {
                         />
                     </div>
 
-                    {/* Description */}
+                    
                     <div>
                         <label className="block text-sm font-medium mb-1">Description</label>
                         <textarea
@@ -162,7 +161,7 @@ export default function CreateRentalForm() {
                         />
                     </div>
 
-                    {/* Submit */}
+                    
                     <button
                         type="submit"
                         className="w-full px-6 py-3 bg-rose-500 text-white rounded-lg font-medium hover:bg-rose-600 transition-all shadow-md"

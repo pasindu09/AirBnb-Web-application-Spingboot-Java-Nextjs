@@ -62,14 +62,12 @@ public class RentalService {
                 Path filePath = uploadPath.resolve(uniqueFileName);
                 Files.copy(image.getInputStream(), filePath);
 
-                // Create and link RentalImage entity
                 RentalImage rentalImage = new RentalImage();
                 rentalImage.setImageUrl("/uploads/rentals/" + uniqueFileName);
                 rentalImage.setRental(rental);
                 rental.getImages().add(rentalImage);
 
             } catch (IOException e) {
-                // Better to use a specific custom exception
                 throw new RuntimeException("Failed to save image file", e);
             }
         }

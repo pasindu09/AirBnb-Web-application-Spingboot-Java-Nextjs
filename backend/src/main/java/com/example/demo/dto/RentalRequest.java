@@ -9,10 +9,10 @@ import lombok.Setter;
 public class RentalRequest {
     private String title;
     private String description;
-    private String propertyType; // Keeping it as String for simple form data binding
+    private String propertyType; 
 
     private String country;
     private String region;
 
-    private BigDecimal price; // The frontend sends a string, which Spring will convert to BigDecimal
+    private BigDecimal price; 
 }

@@ -39,7 +39,6 @@ public class Rental {
     @Column(nullable = false)
     private PropertyType propertyType; // APARTMENT, HOUSE, CONDO, VILLA
 
-    // Fields related to guests/rooms are kept, assuming they might be used later.
     private Integer numberOfGuests;
     private Integer numberOfBedrooms;
     private Integer numberOfBeds;

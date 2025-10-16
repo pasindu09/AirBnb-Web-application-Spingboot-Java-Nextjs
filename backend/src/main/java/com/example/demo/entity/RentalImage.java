@@ -27,7 +27,7 @@ public class RentalImage {
     @Column(nullable = false)
     private String imageUrl;
 
-    // private String caption;
+ 
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "rental_id", nullable = false)

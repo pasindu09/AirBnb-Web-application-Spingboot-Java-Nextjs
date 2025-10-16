@@ -7,5 +7,5 @@ import lombok.Setter;
 public class RegistrationRequest {
     private String username;
     private String password;
-    // You could add other fields like email, full name, etc.
+    
 }

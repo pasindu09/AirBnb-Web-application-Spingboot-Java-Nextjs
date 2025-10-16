@@ -28,7 +28,7 @@ public class AuthController {
     public String loginForm(Model model) {
         logger.info("Accessing login page");
         model.addAttribute("loginRequest", new LoginRequest());
-        return "login"; // Returns login.html
+        return "login"; 
     }
 
     @PostMapping("/login")
@@ -45,17 +45,17 @@ public class AuthController {
 
     @GetMapping("/register")
     public String registerForm() {
-        return "register"; // Returns register.html template
+        return "register"; 
     }
 
     @PostMapping("/register")
     public String registerSubmit(@ModelAttribute RegistrationRequest registrationRequest, Model model) {
         if (authService.register(registrationRequest)) {
             model.addAttribute("message", "Registration successful! You can now log in.");
-            return "login"; // Redirect to the login page after successful registration
+            return "login"; 
         } else {
             model.addAttribute("error", "Registration failed. Username may already exist.");
-            return "register"; // Stay on the registration page with an error
+            return "register"; 
         }
     }
 
