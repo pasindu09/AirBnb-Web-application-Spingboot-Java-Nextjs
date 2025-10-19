@@ -2,35 +2,35 @@
 "use client";
 import { useState } from "react";
 
-const rentals = [
-  {
-    id: 1,
-    title: "Cozy Apartment in Colombo",
-    location: "Colombo, Sri Lanka",
-    price: 45,
-    rating: 4.8,
-    image:
-      "https://source.unsplash.com/random/800x600/?apartment,colombo",
-  },
-  {
-    id: 2,
-    title: "Luxury Villa with Pool",
-    location: "Galle, Sri Lanka",
-    price: 120,
-    rating: 4.9,
-    image:
-      "https://source.unsplash.com/random/800x600/?villa,beach",
-  },
-  {
-    id: 3,
-    title: "Mountain Cabin Retreat",
-    location: "Kandy, Sri Lanka",
-    price: 80,
-    rating: 4.7,
-    image:
-      "https://source.unsplash.com/random/800x600/?cabin,mountain",
-  },
-];
+// const rentals = [
+//   {
+//     id: 1,
+//     title: "Cozy Apartment in Colombo",
+//     location: "Colombo, Sri Lanka",
+//     price: 45,
+//     rating: 4.8,
+//     image:
+//       "https://source.unsplash.com/random/800x600/?apartment,colombo",
+//   },
+//   {
+//     id: 2,
+//     title: "Luxury Villa with Pool",
+//     location: "Galle, Sri Lanka",
+//     price: 120,
+//     rating: 4.9,
+//     image:
+//       "https://source.unsplash.com/random/800x600/?villa,beach",
+//   },
+//   {
+//     id: 3,
+//     title: "Mountain Cabin Retreat",
+//     location: "Kandy, Sri Lanka",
+//     price: 80,
+//     rating: 4.7,
+//     image:
+//       "https://source.unsplash.com/random/800x600/?cabin,mountain",
+//   },
+// ];
 
 export default function HomePage() {
   const [search, setSearch] = useState("");
